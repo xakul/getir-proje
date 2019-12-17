@@ -1,5 +1,0 @@
----
-applications:
-- name: getir-project
-  memory: 64m
-  instances : 1

@@ -1,6 +1,9 @@
 const express = require('express')
 const User = require('../models/users')
 const router = new express.Router()
+const mongoose = require('../db/mongoose')
+
+
 
 router.post('/createUser', async (req, res) => {
      console.log(req.body)
@@ -14,6 +17,62 @@ router.post('/createUser', async (req, res) => {
         res.status(400).send(e)
     }
 })
+
+router.post('/ownedGamesPS', async (req,res) => {
+    
+     const newGame = {
+           gameID : req.body.gameID,
+           gameName : req.body.gameName
+          
+     }
+      try {
+      const user = await User.findOne({login_name : req.body.login_name})
+
+      const ownedPsGames = user.ownedGames[0].ownedPSGames
+
+      ownedPsGames.push(newGame)
+    console.log(user.ownedGames[0].ownedPSGames)
+    await user.save()
+
+
+
+    res.status(200).send(user)
+      }catch {
+          res.status(500).send()
+
+      }
+   
+     
+
+})
+
+router.post('/ownedGamesPC', async (req,res) => {
+    
+    const newGame = {
+          gameID : req.body.gameID,
+          gameName : req.body.gameName
+         
+    }
+     try {
+     const user = await User.findOne({login_name : req.body.login_name})
+
+     const ownedPcGames = user.ownedGames[0].ownedPCGames
+
+  ownedPcGames.push(newGame)
+   await user.save()
+
+
+
+   res.status(200).send(user)
+     }catch {
+         res.status(500).send()
+
+     }
+  
+    
+
+})
+
 
 router.get('/users', async (req, res) => {
     try {
@@ -40,7 +99,7 @@ router.get('/users/:id', async (req, res) => {
     }
 })
 
-router.post('/users/login' , async (req,res) => {
+router.post('/login' , async (req,res) => {
 
         try{
           const user = await  User.findByCredentials(req.body.login_name,req.body.password)

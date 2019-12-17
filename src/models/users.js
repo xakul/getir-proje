@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema(
       },
       surname : {
           type: String,
-          required : true,
           trim : true
       },
       login_name : {
@@ -29,7 +28,6 @@ const userSchema = new mongoose.Schema(
       },
       email : {
         type: String,
-        required: true,
         trim : true,
         validate(value) {
         if(!value.includes('@'))
@@ -42,7 +40,6 @@ const userSchema = new mongoose.Schema(
         type : Number,
         min:  18,
         max : 70,
-        required: true,
         validate(value){
             if(value < 0) {
                 throw new Error ('Age can not be less than 0')
@@ -65,7 +62,7 @@ const userSchema = new mongoose.Schema(
     },
     ownedGames : [
         {
-              ownedPSGames : {
+              ownedPSGames :[{
                   gameID : {
 
 
@@ -73,8 +70,8 @@ const userSchema = new mongoose.Schema(
                   gameName : {
 
                   }
-              },
-              ownedPCGames : {
+              }],
+              ownedPCGames : [{
                    gameID : {
 
                    },
@@ -82,7 +79,7 @@ const userSchema = new mongoose.Schema(
 
                    }
 
-              }
+              }]
         }
     ]
 

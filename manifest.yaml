@@ -1,0 +1,8 @@
+---
+applications:
+- name: getir-proje
+  command: node ./src/index.js 
+  instances: 1 
+  memory: 512M 
+  buildpacks:    
+    - https://github.com/cloudfoundry/nodejs-buildpack
